@@ -7,18 +7,26 @@
    Here am representing four diagrams. This will help the user to understand how the system works and what are the different functionalities that are implemented in the system.
 
 ## *Activity Diagram*
+
+   An activity diagram visually presents a series of actions or flow of control in a system similar to a flowchart or a data flow diagram.
  
  ![activity_diagram]( https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/SupplyChain/Diagrams/Activity%20Diagram.png?raw=true)
  
 ## *Class Diagram*
+
+   A class diagram is a type of static structure diagram that describes the structure of a system by showing the system's classes, their attributes, operations (or methods),        and the relationships among objects.
  
  ![class_diagram](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/SupplyChain/Diagrams/Class%20Diagram.png?raw=true)
  
  ## *Sequence Diagram*
  
+  A sequence diagram shows object interactions arranged in time sequence.
+ 
   ![sequence_diagram](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/SupplyChain/Diagrams/Sequence%20Diagram.png?raw=true)
   
  ## *State Diagram*
+ 
+  A state diagram is a diagram used in computer science to describe the behavior of a system considering all the possible states of an object when an event occurs.
  
   ![state_diagram](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/SupplyChain/Diagrams/State%20Diagram%20(1).png?raw=true)
   
