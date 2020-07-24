@@ -24,13 +24,12 @@
   
 # Version
 
- >Project Version:- v1.0
- 
- >Node Version:-    v12.18.1
- 
- >Truffle Version:- v5.1.32
- 
- >Web3 Version:-    v1.2.1
+ |  Dependencies   |  Version  | 
+ |-----------------|-----------|
+ | Project Version |  v1.0     | 
+ | Node Version    |  v12.18.1 |
+ | Truffle Version |  v5.1.32  |
+ | Web3 Version    |  v1.2.1   |
  
 # Libraries
    
