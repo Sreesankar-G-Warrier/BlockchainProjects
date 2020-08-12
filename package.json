@@ -5,7 +5,7 @@
   "directories": {
     "test": "test"
   },
-  "repository": "https://github.com/Sreesankar-G-Warrier/BlockchainProjects/FlightSurety",
+  "repository": "https://github.com/Sreesankar-G-Warrier/BlockchainProjects/tree/FlightSurety",
   "license": "MIT",
   "scripts": {
     "test": "truffle test ./test/flightSurety.js",
@@ -37,7 +37,7 @@
     "superstatic": "6.0.3",
     "truffle": "5.0.2",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "^1.0.0-beta.37",
+    "web3": "^1.2.11",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "3.7.2",
