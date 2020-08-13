@@ -1,12 +1,13 @@
-
 var FlightSuretyApp = artifacts.require("FlightSuretyApp");
 var FlightSuretyData = artifacts.require("FlightSuretyData");
 var BigNumber = require('bignumber.js');
+var TruffleAssert = require('truffle-assertions');
 
 var Config = async function(accounts) {
     
     // These test addresses are useful when you need to add
     // multiple users in test scripts
+    /*
     let testAddresses = [
         "0x69e1CB5cFcA8A311586e3406ed0301C06fb839a2",
         "0xF014343BDFFbED8660A9d8721deC985126f189F3",
@@ -18,25 +19,37 @@ var Config = async function(accounts) {
         "0xc257274276a4e539741ca11b590b9447b26a8051",
         "0x2f2899d6d35b1a48a4fbdc93a37a72f264a9fca7"
     ];
+    */
 
 
     let owner = accounts[0];
     let firstAirline = accounts[1];
+    let airlines = accounts.slice(2, 12);
+    let passengers = accounts.slice(12, 16);
+    let oracles = accounts.slice(16,37);
 
-    let flightSuretyData = await FlightSuretyData.new();
-    let flightSuretyApp = await FlightSuretyApp.new();
+    let flightSuretyData = await FlightSuretyData.new(firstAirline);
+    let flightSuretyApp = await FlightSuretyApp.new(flightSuretyData.address);
 
     
     return {
         owner: owner,
         firstAirline: firstAirline,
+        airlines: airlines,
+        passengers: passengers,
+        oracles: oracles,
         weiMultiple: (new BigNumber(10)).pow(18),
-        testAddresses: testAddresses,
         flightSuretyData: flightSuretyData,
         flightSuretyApp: flightSuretyApp
     }
 }
 
+var passesWithEvent = async(eventName, asyncFunction) => {
+    await TruffleAssert.passes(asyncFunction);
+    TruffleAssert.eventEmitted(await asyncFunction, eventName);
+}
+
 module.exports = {
-    Config: Config
+    Config: Config,
+    passesWithEvent: passesWithEvent
 };

@@ -4,104 +4,94 @@ import Config from './config.json';
 import Web3 from 'web3';
 import express from 'express';
 
+// https://github.com/babel/babel-preset-env/issues/112
+require("babel-polyfill")
 
-// Flight status codees
-const STATUS_CODE_UNKNOWN = 0;
-const STATUS_CODE_ON_TIME = 10;
-const STATUS_CODE_LATE_AIRLINE = 20;
-const STATUS_CODE_LATE_WEATHER = 30;
-const STATUS_CODE_LATE_TECHNICAL = 40;
-const STATUS_CODE_LATE_OTHER = 50;
-const ORACLES_COUNT = 30; 
-const STATUSCODES  = [STATUS_CODE_UNKNOWN, STATUS_CODE_ON_TIME, STATUS_CODE_LATE_AIRLINE, STATUS_CODE_LATE_WEATHER, STATUS_CODE_LATE_TECHNICAL, STATUS_CODE_LATE_OTHER];
-  // Track all registered oracles
- let oracles= {};
 let config = Config['localhost'];
 let web3 = new Web3(new Web3.providers.WebsocketProvider(config.url.replace('http', 'ws')));
 web3.eth.defaultAccount = web3.eth.accounts[0];
 let flightSuretyApp = new web3.eth.Contract(FlightSuretyApp.abi, config.appAddress);
 let flightSuretyData = new web3.eth.Contract(FlightSuretyData.abi, config.dataAddress);
 
+var oracles = [];
 
-web3.eth.getAccounts().then((accounts) => { 
-  console.log("length :"+ accounts.length);
-  flightSuretyData.methods.authorizeCaller(config.appAddress)
-     .send({from: accounts[0]})
-     .then(result => {
-      console.log("appAddress registered as the authorized contract of dataContract");
-    })
-    .catch(error => {
-      console.log("Error in authorizing appcontract. " + error);
-    });
-     flightSuretyApp.methods.REGISTRATION_FEE().call().then(fee => {
-      for(let a=1; a<ORACLES_COUNT; a++) {
-        flightSuretyApp.methods.registerOracle()
-        .send({ from: accounts[a], value: fee,gas:4000000 })
-        .then(result=>{
-          flightSuretyApp.methods.getMyIndexes().call({from: accounts[a]})
-          .then(indices =>{
-            oracles[accounts[a]] = indices;
-            console.log("Oracle registered: " + accounts[a] + " indices:" + indices);
-          })
-        }) 
-        .catch(error => {
-          console.log("Error while registering oracles: " + accounts[a] +  " Error: " + error);
-        });           
-      }
-     })  
-    
-
-});
-
- flightSuretyApp.events.FlightStatusInfo({
-  fromBlock: 0
-}, function (error, event) {
-  if (error) console.log(error)
-  else{
-    
-    console.log("Received flightstatusInfo event:  " + JSON.stringify(event));
-    }
-    
-
+(async() => {
+  let accounts = await web3.eth.getAccounts();
+  try {
+    await flightSuretyData.methods.authorizeCaller(config.appAddress).send({from: accounts[0]});
+  } catch(e) {
+    console.log(e)
   }
-); 
-  
+
+  let fee = await flightSuretyApp.methods.REGISTRATION_FEE().call()
+
+  // REQ: A server app has been created for simulating oracle behavior. 
+  // Server can be launched with “npm run server”
+
+  // REQ: Upon startup, 20+ oracles are registered 
+  // and their assigned indexes are persisted in memory
+  // start ganache-cli with -a 40 option.
+  accounts.slice(16,37).forEach( async(oracleAddress) => {
+    // const estimateGas = await flightSuretyApp.methods.registerOracle().estimateGas({from: oracleAddress, value: fee});
+    try {
+      await flightSuretyApp.methods.registerOracle().send({from: oracleAddress, value: fee, gas: 3000000});
+      let indexesResult = await flightSuretyApp.methods.getMyIndexes().call({from: oracleAddress});
+      oracles.push({
+        address: oracleAddress,
+        indexes: indexesResult
+      });
+    } catch(e) {
+      console.log(e)
+    }
+  });
+})();
+
+console.log("Registering Oracles.\n");
+setTimeout(() => {
+  oracles.forEach(oracle => {
+    console.log(`Oracle: address[${oracle.address}], indexes[${oracle.indexes}]`);
+  })
+  console.log("Start watching for event OracleRequest to submit responses.")
+}, 25000)
 
 
-
+// REQ: Update flight status requests from client Dapp result in OracleRequest event 
+// emitted by Smart Contract that is captured by server (displays on console and handled in code)
 flightSuretyApp.events.OracleRequest({
     fromBlock: 0
   }, function (error, event) {
-    if (error) console.log(error)
-    else{
-      const index = event.returnValues.index;
-      const airline = event.returnValues.airline;
-      const flight = event.returnValues.flight;
-      const timestamp = event.returnValues.timestamp;      
-      //let randomstatusCode = STATUSCODES[Math.floor(Math.random()*STATUSCODES.length)];
-      //console.log("statuscode is:" + randomstatusCode);
-      for(var key in oracles)
-      {
-        var indexes = oracles[key];
-        if(indexes.includes(index))
-        {          
-          let randomstatusCode = STATUS_CODE_LATE_AIRLINE;//STATUSCODES[Math.floor(Math.random()*STATUSCODES.length)];
-          flightSuretyApp.methods.submitOracleResponse(index, airline, flight, timestamp, randomstatusCode)       
-          .send({ from: key,gas:1000000})
-          .then(result =>{
-            console.log("Oracle response sent with statuscode: "  + randomstatusCode + " for "+ flight + " and index:"+ index);
-          })
-          .catch(error =>{
-            console.log("Error while sending Oracle response  for "+ flight + " Error:" + error)
-          });      
-           
-        }
-      }
-      //console.log(event);
 
+    if (error) {
+      console.log(error)
+    } else {
+
+      // REQ: Server will loop through all registered oracles, 
+      // identify those oracles for which the OracleRequest event applies, 
+      // and respond by calling into FlightSuretyApp contract with random status code of Unknown (0), 
+      // On Time (10) or Late Airline (20), Late Weather (30), Late Technical (40), or Late Other (50)
+      let statusCode = Math.floor(Math.random() * 6) * 10;
+      let result = event.returnValues;
+      console.log(`OracleRequest: [${result.index}] for ${result.flight} ${result.timestamp}`);
+  
+      oracles.forEach((oracle) => {
+        oracle.indexes.forEach((index) => {
+          flightSuretyApp.methods.submitOracleResponse(
+            index, 
+            result.airline, 
+            result.flight, 
+            result.timestamp, 
+            statusCode
+            ).send(
+            { from: oracle.address, gas:5555555}
+            ).then(res => {
+              console.log(`OracleResponse: address(${oracle.address}) index(${index}) accepted[${statusCode}]`)
+            }).catch(err => {
+              console.log(`OracleResponse: address(${oracle.address}) index(${index}) rejected[${statusCode}]`)
+            });
+          });
+      });
     }
-    
-}); 
+});
 
 const app = express();
 app.get('/api', (req, res) => {
@@ -109,6 +99,5 @@ app.get('/api', (req, res) => {
       message: 'An API for use with your Dapp!'
     })
 })
-
 
 export default app;
