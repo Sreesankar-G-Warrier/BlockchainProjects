@@ -39,6 +39,9 @@ To build dapp for prod:
 
 Deploy the contents of the ./dapp folder
 
+## Contract Address 
+
+https://rinkeby.etherscan.io/address/0x27cd8Cf560dCf5Daf49BdA5c41d809024ee20d1B
 
 ## Resources
 
