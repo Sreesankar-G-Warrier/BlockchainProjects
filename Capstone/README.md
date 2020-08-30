@@ -64,12 +64,16 @@
 
 ## On Etherscan and OpenSea Demo
   - SolnSquareVerifier on Ether: https://rinkeby.etherscan.io/address/0x21b0dd083d18062F04078C8B329f3Ab90E848e3F
+  
   - Transaction: https://rinkeby.etherscan.io/address/0x205cb429cc7dccff9a222b51cb5553fe1d5704b0
-  - Demo of OpenSea: - https://rinkeby.opensea.io/assets/0x21b0dd083d18062f04078c8b329f3ab90e848e3f/200
-                     - https://rinkeby.opensea.io/assets/0x9a53711e8a178e6adb0218ecb0a4de358dc27ce2/2
-                     - https://rinkeby.opensea.io/assets/0xc218a7b48e84640ae44893d5a674bcc5bd28a3f7/2000
-                     - https://rinkeby.opensea.io/assets/0x876472d7ba7197e03555d7fedfbf409be79d9d2d/10000
-                     - https://rinkeby.opensea.io/assets/0x46aeb0cdb2ff7428b4e83761807e4251beb152bb/1
+  
+  - Demo of OpenSea: 
+  
+    1. https://rinkeby.opensea.io/assets/0x21b0dd083d18062f04078c8b329f3ab90e848e3f/200              
+    2. https://rinkeby.opensea.io/assets/0x9a53711e8a178e6adb0218ecb0a4de358dc27ce2
+    3. https://rinkeby.opensea.io/assets/0xc218a7b48e84640ae44893d5a674bcc5bd28a3f7/2000             
+    4. https://rinkeby.opensea.io/assets/0x876472d7ba7197e03555d7fedfbf409be79d9d2d/10000              
+    5. https://rinkeby.opensea.io/assets/0x46aeb0cdb2ff7428b4e83761807e4251beb152bb/1
   
 ## Project Resources
 
