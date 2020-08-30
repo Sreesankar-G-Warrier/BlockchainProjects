@@ -15,7 +15,7 @@ contract SolnSquareVerifier is  RealEstateERC721Token{
     SquareVerifier public verifierContract;
 
     event SolutionAdded(address owner);
-    constructor(address verifierAddress, string memory name, string memory symbol, string memory baseTokenURI )
+    constructor(address verifierAddress)
         RealEstateERC721Token() public
     {
         verifierContract = SquareVerifier(verifierAddress);
