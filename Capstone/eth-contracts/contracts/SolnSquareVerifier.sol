@@ -1,4 +1,4 @@
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity >=0.4.21 <0.6.0;
 //pragma experimental ABIEncoderV2;
 
 import "openzeppelin-solidity/contracts/utils/Address.sol";
@@ -14,12 +14,13 @@ contract SquareVerifier is Verifier{
 contract SolnSquareVerifier is  RealEstateERC721Token{
     SquareVerifier public verifierContract;
 
-    event SolutionAdded(address owner);
     constructor(address verifierAddress)
-        RealEstateERC721Token() public
-    {
-        verifierContract = SquareVerifier(verifierAddress);
-    }     
+          RealEstateERC721Token() 
+          public
+          {
+              verifierContract = SquareVerifier(verifierAddress);
+
+          }     
 
 
 //  define a solutions struct that can hold an index & an address
@@ -101,31 +102,3 @@ function mintToken(address _to,uint _tokenId,
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
