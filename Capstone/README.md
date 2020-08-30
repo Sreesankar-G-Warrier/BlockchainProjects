@@ -21,6 +21,7 @@
   - To Deploy the Application
 
   `truffle migrate --network <Select a Network>`
+  
   ![CapstoneMigration](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/Capstone/CapstoneMigration.png)
   
   - To Test the Application
