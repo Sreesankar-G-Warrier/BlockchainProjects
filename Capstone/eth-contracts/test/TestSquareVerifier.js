@@ -2,7 +2,7 @@
 let squareVerifier = artifacts.require('SquareVerifier');
 //Using require node.js will look for a proof.js file first and if not found 
 //then it will look for a proof.json file.
-let correctproof = require('../../zokrates/code/square/proof');
+let correctproof = require('../../zokrates/code/sqaure/proof.json');
 
 contract('TestSquareVerifier', accounts => {
 
