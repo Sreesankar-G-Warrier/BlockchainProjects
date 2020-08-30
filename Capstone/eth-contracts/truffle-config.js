@@ -53,6 +53,8 @@ module.exports = {
         return new HDWalletProvider(mnemonic, 'https://rinkeby.infura.io/v3/YOUR TOKEN') 
       },
       network_id: 4,
+       gas: 6721975,
+       gasPrice: 20000000000
     }
 
     // Another network with more advanced options...
