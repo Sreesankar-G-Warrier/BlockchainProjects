@@ -21,9 +21,14 @@
   - To Deploy the Application
 
   `truffle migrate --network <Select a Network>`
+  ![CapstoneMigration](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/Capstone/CapstoneMigration.png)
+  
   - To Test the Application
 
   `truffle test`
+  
+  ![CapstoneTest](https://github.com/Sreesankar-G-Warrier/BlockchainProjects/blob/master/Capstone/Capstone%20Test.png)
+  
   - Create ZK-Snarks Proof using Zokrates
   > Install Docker Community Edition here (https://docs.docker.com/install/). Virtualization should be enabled for Docker to work. 
   - Run this docker command
@@ -57,9 +62,13 @@
 | SolnSquareVerifier | 0xc4aa98710BCA36ee2D6A71924A3e01B31d60095f |
 
 ## On Etherscan and OpenSea Demo
-  - SolnSquareVerifier on Ether: https://rinkeby.etherscan.io/address/0xc4aa98710bca36ee2d6a71924a3e01b31d60095f
-  - Transaction: https://rinkeby.etherscan.io/tx/0xca0b7079c0935c6ad81fa2c8c7860430cec0bb2560cc5298374e169f5636cf2a
-  - Demo of OpenSea: https://rinkeby.opensea.io/assets/0xc4aa98710bca36ee2d6a71924a3e01b31d60095f/1
+  - SolnSquareVerifier on Ether: https://rinkeby.etherscan.io/address/0x21b0dd083d18062F04078C8B329f3Ab90E848e3F
+  - Transaction: https://rinkeby.etherscan.io/address/0x205cb429cc7dccff9a222b51cb5553fe1d5704b0
+  - Demo of OpenSea: - https://rinkeby.opensea.io/assets/0x21b0dd083d18062f04078c8b329f3ab90e848e3f/200
+                     - https://rinkeby.opensea.io/assets/0x9a53711e8a178e6adb0218ecb0a4de358dc27ce2/2
+                     - https://rinkeby.opensea.io/assets/0xc218a7b48e84640ae44893d5a674bcc5bd28a3f7/2000
+                     - https://rinkeby.opensea.io/assets/0x876472d7ba7197e03555d7fedfbf409be79d9d2d/10000
+                     - https://rinkeby.opensea.io/assets/0x46aeb0cdb2ff7428b4e83761807e4251beb152bb/1
   
 ## Project Resources
 
